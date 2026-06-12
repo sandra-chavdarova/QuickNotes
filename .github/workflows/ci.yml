@@ -53,3 +53,4 @@ jobs:
           context: ./frontend
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/quicknotes-frontend:latest
+          
