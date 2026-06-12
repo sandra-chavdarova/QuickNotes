@@ -2,24 +2,44 @@ const router = require('express').Router();
 const Note = require('../models/Note');
 
 router.get('/', async (req, res) => {
-    const notes = await Note.find().sort({ createdAt: -1 });
-    res.json(notes);
+    try {
+        const notes = await Note.find().sort({ createdAt: -1 });
+        res.json(notes);
+    } catch (err) {
+        console.error('GET error:', err);
+        res.status(500).json({ error: err.message });
+    }
 });
 
 router.post('/', async (req, res) => {
-    const note = new Note(req.body);
-    const saved = await note.save();
-    res.status(201).json(saved);
+    try {
+        const note = new Note(req.body);
+        const saved = await note.save();
+        res.status(201).json(saved);
+    } catch (err) {
+        console.error('POST error:', err);
+        res.status(500).json({ error: err.message });
+    }
 });
 
 router.put('/:id', async (req, res) => {
-    const updated = await Note.findByIdAndUpdate(req.id, req.body, { new: true });
-    res.json(updated);
+    try {
+        const updated = await Note.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.json(updated);
+    } catch (err) {
+        console.error('PUT error:', err);
+        res.status(500).json({ error: err.message });
+    }
 });
 
 router.delete('/:id', async (req, res) => {
-    await Note.findByIdAndDelete(req.params.id);
-    res.json({ message: 'Note deleted' });
+    try {
+        await Note.findByIdAndDelete(req.params.id);
+        res.json({ message: 'Note deleted' });
+    } catch (err) {
+        console.error('DELETE error:', err);
+        res.status(500).json({ error: err.message });
+    }
 });
 
 module.exports = router;
