@@ -6,31 +6,27 @@ function NoteForm({ onSubmit }) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        if (!title || !content) return
+        if (!title && !content) return
         onSubmit({ title, content })
         setTitle('')
         setContent('')
     }
 
     return (
-        <div>
+        <div className="form-card">
             <h2>New Note</h2>
-            <div>
-                <input
-                    type="text"
-                    placeholder="Title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                />
-            </div>
-            <div>
-        <textarea
-            placeholder="Write your note here..."
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-        />
-            </div>
-            <button onClick={handleSubmit}>Add Note</button>
+            <input
+                type="text"
+                placeholder="Title (optional)"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+            />
+            <textarea
+                placeholder="Write your note here..."
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+            />
+            <button className="btn-primary" onClick={handleSubmit}>Add Note</button>
         </div>
     )
 }
