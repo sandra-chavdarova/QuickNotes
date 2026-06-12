@@ -7,22 +7,17 @@ function App() {
   const [notes, setNotes] = useState([])
 
   useEffect(() => {
-    loadNotes()
+    getNotes().then(res => setNotes(res.data))
   }, [])
-
-  const loadNotes = async () => {
-    const res = await getNotes()
-    setNotes(res.data)
-  }
 
   const handleCreate = async (noteData) => {
     await createNote(noteData)
-    loadNotes()
+    getNotes().then(res => setNotes(res.data))
   }
 
   const handleDelete = async (id) => {
     await deleteNote(id)
-    loadNotes()
+    getNotes().then(res => setNotes(res.data))
   }
 
   return (
